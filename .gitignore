@@ -1,0 +1,36 @@
+# Dependências de Node.js
+node_modules/
+
+# Arquivos de log e depuração do NPM
+npm-debug.log
+yarn-debug.log
+.pnpm-debug.log*
+
+# Saída da build do Vite
+dist/
+
+# Arquivos temporários e de cache
+.cache/
+*.tmp
+*~
+*.log
+.DS_Store             # macOS
+Thumbs.db             # Windows
+
+# Arquivos de configuração de IDEs (opcional, se você usa alguma dessas IDEs)
+.vscode/              # VS Code
+.idea/                # JetBrains (WebStorm, IntelliJ)
+*.sublime-project     # Sublime Text
+*.sublime-workspace   # Sublime Text
+
+# Variáveis de ambiente (se você usar arquivos .env para configurações locais)
+.env
+.env.*
+!.env.example         # Permite que o arquivo .env.example seja rastreado se existir
+
+# Arquivos de mapeamento de código fonte gerados
+*.js.map
+
+# Cobertura de teste (se você adicionar testes no futuro)
+coverage/
+.nyc_output/
