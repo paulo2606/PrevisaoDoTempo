@@ -33,9 +33,15 @@ const hideError = () => {
     errorMessage.classList.add("hide");
 };
 
-const getWeatherData = async(city) => {
+const getWeatherData = async(city, lat = null, lon = null) => {
     showLoader();
-    const apiWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=pt_br`;
+    let apiWeatherURL;
+
+    if (lat !== null && lon !== null) {
+        apiWeatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}&lang=pt_br`;
+    } else {
+        apiWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=pt_br`;
+    }
 
     const res = await fetch(apiWeatherURL);
     const data = await res.json();
@@ -50,12 +56,12 @@ const getWeatherData = async(city) => {
     return data;
 };
 
-const showWeatherData = async (city) => {
+const showWeatherData = async (city, lat = null, lon = null) => {
     hideError();
     weatherContainer.classList.add("hide");
 
     try {
-        const data = await getWeatherData(city);
+        const data = await getWeatherData(city, lat, lon);
 
         cityElement.innerText = data.name;
         var country = data.sys.country.toLowerCase();
@@ -122,9 +128,9 @@ const displaySuggestions = (suggestions) => {
         suggestionItem.innerText = cityName;
 
         suggestionItem.addEventListener("click", () => {
-            cityInput.value = city.name;
+            cityInput.value = city.name; 
             suggestionsContainer.classList.add("hide");
-            showWeatherData(city.name);
+            showWeatherData(city.name, city.lat, city.lon); 
         });
 
         suggestionsContainer.appendChild(suggestionItem);
