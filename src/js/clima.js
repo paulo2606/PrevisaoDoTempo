@@ -11,8 +11,12 @@ const countryElement = document.querySelector("#country");
 const umidityElement = document.querySelector("#umidity span");
 const windElement = document.querySelector("#wind span");
 
-const weatherContainer = document.querySelector("#weather-data"); 
-const suggestionsContainer = document.querySelector("#suggestions-container"); 
+const tempMaxElement = document.querySelector("#temp-max span");
+const tempMinElement = document.querySelector("#temp-min span");
+const feelsLikeElement = document.querySelector("#feels-like span");
+
+const weatherContainer = document.querySelector("#weather-data");
+const suggestionsContainer = document.querySelector("#suggestions-container");
 
 const errorMessage = document.querySelector("#error-message");
 const loader = document.querySelector("#loader");
@@ -30,12 +34,12 @@ const hideError = () => {
 };
 
 const getWeatherData = async(city) => {
-    showLoader(); 
+    showLoader();
     const apiWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=pt_br`;
 
     const res = await fetch(apiWeatherURL);
     const data = await res.json();
-    
+
     hideLoader();
 
     if (data.cod === "404") {
@@ -68,9 +72,15 @@ const showWeatherData = async (city) => {
         umidityElement.innerText = parseInt(data.main.humidity) + "%";
         windElement.innerText = parseFloat(data.wind.speed) + " km/h";
 
+        tempMaxElement.innerText = parseInt(data.main.temp_max);
+        tempMinElement.innerText = parseInt(data.main.temp_min);
+        feelsLikeElement.innerText = parseInt(data.main.feels_like);
+
         weatherContainer.classList.remove("hide");
+
     } catch (error) {
         errorMessage.classList.remove("hide");
+        weatherContainer.classList.add("hide");
         console.error("Erro ao buscar dados do clima:", error);
     }
 };
@@ -79,7 +89,7 @@ let debounceTimer;
 
 const getCitySuggestions = async (query) => {
     const apiGeocodingURL = `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`;
-    
+
     try {
         const res = await fetch(apiGeocodingURL);
         const data = await res.json();
@@ -103,27 +113,27 @@ const displaySuggestions = (suggestions) => {
     suggestions.forEach(city => {
         const suggestionItem = document.createElement("div");
         suggestionItem.classList.add("suggestion-item");
-        
+
         let cityName = city.name;
         if (city.state) {
             cityName += `, ${city.state}`;
         }
         cityName += `, ${city.country}`;
         suggestionItem.innerText = cityName;
-        
+
         suggestionItem.addEventListener("click", () => {
-            cityInput.value = city.name; 
+            cityInput.value = city.name;
             suggestionsContainer.classList.add("hide");
             showWeatherData(city.name);
         });
-        
+
         suggestionsContainer.appendChild(suggestionItem);
     });
 };
 
 searchBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    suggestionsContainer.classList.add("hide"); 
+    suggestionsContainer.classList.add("hide");
     const city = cityInput.value;
     showWeatherData(city);
 });
@@ -131,10 +141,8 @@ searchBtn.addEventListener("click", (e) => {
 cityInput.addEventListener("input", (e) => {
     const query = e.target.value.trim();
 
-    if (query === query) {
-        weatherContainer.classList.add("hide");
-        errorMessage.classList.add("hide");
-    }
+    weatherContainer.classList.add("hide");
+    errorMessage.classList.add("hide");
 
     clearTimeout(debounceTimer);
 
@@ -152,9 +160,9 @@ cityInput.addEventListener("input", (e) => {
 });
 
 cityInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") { 
+    if (e.key === "Enter") {
         e.preventDefault();
-        suggestionsContainer.classList.add("hide"); 
+        suggestionsContainer.classList.add("hide");
         const city = cityInput.value;
         showWeatherData(city);
     }

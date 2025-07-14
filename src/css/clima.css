@@ -1,196 +1,190 @@
-/* body {
-    margin: 0;
-    overflow: hidden;
-}
-
-canvas {
-    display: block;
-} */
-
-/* Geral */
 * {
-  padding: 0;
-  margin: 0;
-  font-family: "Ubuntu", sans-serif;
+    padding: 0;
+    margin: 0;
+    font-family: "Ubuntu", sans-serif;
 }
 
 body {
-  background: linear-gradient(180deg, rgba(89, 76, 238, 1) 0%, #8dd0f5 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-position: center;
-  background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
 }
 
 .hide {
-  display: none !important;
+    display: none !important;
+}
+
+#globe-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+.main-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .container {
-  background-color: #5c54ed;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 2rem;
-  color: #fdfdfd;
-  border-radius: 1rem;
-  max-width: 400px;
+    border: solid white;
+    backdrop-filter: blur(5px);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 2rem;
+    color: #fdfdfd;
+    border-radius: 1rem;
+    width: 250px;
+    position: relative;
 }
 
-/* Form */
 .form h3 {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .form-input-container {
-  display: flex;
+    display: flex;
 }
 
 .form input {
-  padding: 0.8rem;
-  border: none;
-  flex: 1;
-  border-radius: 4px;
+    padding: 1rem;
+    border: none;
+    flex: 1;
+    border-radius: 30px;
 }
 
 .form button {
-  padding: 0.8rem;
-  min-width: 50px;
-  margin-left: 8px;
-  background-color: #8dd0f5;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+    padding: 0.8rem;
+    min-width: 50px;
+    margin-left: -50px;
+    background-color: #8dd0f5;
+    border: none;
+    cursor: pointer;
+    border-radius: 30px;
 }
 
-/* Clima */
 #weather-data,
 #error-message,
 #loader,
 #suggestions {
-  border-top: 1px solid #fff;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  text-align: center;
+    border-top: 1px solid #fff;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    text-align: center;
 }
 
 #weather-data h2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.6rem;
 }
 
 #weather-data h2 i {
-  font-size: 1rem;
+    font-size: 1rem;
 }
 
 #weather-data span {
-  margin: 0.6rem;
+    margin: 0.6rem;
 }
 
 #temperature {
-  font-size: 3rem;
+    font-size: 3rem;
 }
 
 #country {
-  height: 15px;
+    height: 15px;
 }
 
 #description-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0.6rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.6rem 0;
 }
 
 #description {
-  text-transform: capitalize;
-  font-weight: bold;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+#temp-details-container {
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+    margin: 1rem 0; 
+    flex-wrap: wrap; 
+}
+
+#temp-details-container p {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
 }
 
 #details-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #details-container #umidity {
-  border-right: 1px solid #fff;
-  margin: 0.6rem;
-  padding: 0.6rem;
+    border-right: 1px solid #fff;
+    margin: 0.6rem;
+    padding: 0.6rem;
 }
 
-/* Loader */
 #loader i {
-  animation: rotate 1.5s linear infinite;
+    animation: rotate 1.5s linear infinite;
 }
 
 @keyframes rotate {
-  to {
-    transform: rotate(360deg);
-  }
-} 
+    to {
+        transform: rotate(360deg);
+    }
+}
 
 #suggestions-container {
     background-color: #5c54ed;
     border: 1px solid #7a73e6;
     border-radius: 4px;
     margin-top: 0.5rem;
-    max-height: 200px; /* Limita a altura e adiciona scroll */
-    overflow-y: auto; /* Adiciona scroll se a lista for muito longa */
-    z-index: 10; /* Garante que fique acima de outros elementos */
-    position: absolute; /* Para posicionar abaixo do input */
-    width: calc(100% - 4rem); /* Ajuste para o padding do container principal */
-    left: 2rem; /* Alinhar com o padding do container */
-    right: 2rem; /* Alinhar com o padding do container */
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    position: absolute;
+    width: calc(100% - 4rem);
+    left: 2rem;
+    right: 2rem;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-/* Estilo para cada sugestão */
 .suggestion-item {
     padding: 0.8rem;
     cursor: pointer;
     text-align: left;
-    border-bottom: 1px solid #7a73e6; /* Linha divisória */
+    border-bottom: 1px solid #7a73e6;
     font-size: 0.9rem;
 }
 
 .suggestion-item:last-child {
-    border-bottom: none; /* Remove a linha divisória do último item */
+    border-bottom: none;
 }
 
 .suggestion-item:hover {
-    background-color: #6a63ee; /* Efeito ao passar o mouse */
+    background-color: #6a63ee;
 }
 
-/* Garante que o contêiner principal do formulário seja relativo para posicionamento absoluto das sugestões */
 .form {
-    position: relative; 
-}
-
-/* Sugestões */
-#suggestions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-#suggestions button {
-  min-width: 150px;
-  margin: 0.8rem;
-  padding: 0.6rem 0.9rem;
-  border-radius: 10rem;
-  border: none;
-  background-color: #8dd0f5;
-  color: #fff;
-  cursor: pointer;
-  font-weight: bold;
-  opacity: 0.8;
-  transition: 0.4s;
-}
-
-#suggestions button:hover {
-  opacity: 1;
+    position: relative;
 }
