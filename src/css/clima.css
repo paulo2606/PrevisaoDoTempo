@@ -1,7 +1,9 @@
+/* RESET E BASE */
 * {
     padding: 0;
     margin: 0;
     font-family: "Ubuntu", sans-serif;
+    box-sizing: border-box;
 }
 
 body {
@@ -11,6 +13,8 @@ body {
     height: 100vh;
     overflow: hidden;
     position: relative;
+    background: #0d1b2a;
+    color: #fdfdfd;
 }
 
 .hide {
@@ -35,113 +39,125 @@ body {
     position: absolute;
     top: 0;
     left: 0;
+    padding: 1rem;
 }
 
 .container {
-    border: solid white;
-    backdrop-filter: blur(5px);
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    padding: 2rem;
-    color: #fdfdfd;
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 1rem;
-    width: 250px;
-    position: relative;
+    padding: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 12px;
+    max-width: 900px;
+    width: 100%;
 }
 
 .form h3 {
     margin-bottom: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 .form-input-container {
     display: flex;
+    gap: 0.5rem;
 }
 
 .form input {
+    flex: 1;
     padding: 1rem;
     border: none;
-    flex: 1;
     border-radius: 30px;
 }
 
 .form button {
     padding: 0.8rem;
     min-width: 50px;
-    margin-left: -50px;
     background-color: #8dd0f5;
     border: none;
-    cursor: pointer;
     border-radius: 30px;
+    cursor: pointer;
 }
 
-#weather-data,
-#error-message,
-#loader,
-#suggestions {
-    border-top: 1px solid #fff;
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    text-align: center;
+.content-grid {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+#weather-data {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: rgba(255, 255, 255, 0.1) 0 2px 8px;
 }
 
 #weather-data h2 {
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-bottom: 0.6rem;
-}
-
-#weather-data h2 i {
-    font-size: 1rem;
-}
-
-#weather-data span {
-    margin: 0.6rem;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 #temperature {
     font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+#description {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+}
+
+#weather-icon {
+    width: 80px;
+    height: 80px;
+    display: block;
+    margin: 0 auto;
+}
+
+#temp-details-container,
+#details-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+#temp-details-container p,
+#details-container p {
+    font-size: 0.95rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.08);
+    margin: 0.5rem;
 }
 
 #country {
     height: 15px;
 }
 
-#description-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0.6rem 0;
+#map {
+    flex: 1;
+    min-width: 300px;
+    height: 350px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
 }
 
-#description {
-    text-transform: capitalize;
-    font-weight: bold;
-}
-
-#temp-details-container {
-    display: flex;
-    justify-content: space-around; 
-    align-items: center;
-    margin: 1rem 0; 
-    flex-wrap: wrap; 
-}
-
-#temp-details-container p {
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-}
-
-#details-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#details-container #umidity {
-    border-right: 1px solid #fff;
-    margin: 0.6rem;
-    padding: 0.6rem;
+#error-message,
+#loader {
+    text-align: center;
+    margin-top: 1rem;
 }
 
 #loader i {

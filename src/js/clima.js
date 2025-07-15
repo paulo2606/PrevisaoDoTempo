@@ -21,6 +21,9 @@ const suggestionsContainer = document.querySelector("#suggestions-container");
 const errorMessage = document.querySelector("#error-message");
 const loader = document.querySelector("#loader");
 
+let map = null;
+let marker = null;
+
 const showLoader = () => {
     loader.classList.remove("hide");
 };
@@ -56,13 +59,37 @@ const getWeatherData = async(city, lat = null, lon = null) => {
     return data;
 };
 
+const initializeOrUpdateMap = (lat, lon) => {
+    const mapDiv = document.querySelector("#map");
+    mapDiv.classList.remove("hide");
+
+    if (!map) {
+        map = L.map("map").setView([lat, lon], 10);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        marker = L.marker([lat, lon]).addTo(map);
+    } else {
+        map.setView([lat, lon], 10);
+        marker.setLatLng([lat, lon]);
+    }
+    marker.bindPopup(cityElement.innerText).openPopup();
+
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 100);
+};
+
+
 const showWeatherData = async (city, lat = null, lon = null) => {
     hideError();
     weatherContainer.classList.add("hide");
-
+    document.querySelector("#map").classList.add("hide"); 
+    
     try {
         const data = await getWeatherData(city, lat, lon);
-
+        
+        initializeOrUpdateMap(data.coord.lat, data.coord.lon);
         cityElement.innerText = data.name;
         var country = data.sys.country.toLowerCase();
         countryElement.setAttribute(
@@ -87,6 +114,7 @@ const showWeatherData = async (city, lat = null, lon = null) => {
     } catch (error) {
         errorMessage.classList.remove("hide");
         weatherContainer.classList.add("hide");
+        document.querySelector("#map").classList.add("hide"); 
         console.error("Erro ao buscar dados do clima:", error);
     }
 };
@@ -149,6 +177,7 @@ cityInput.addEventListener("input", (e) => {
 
     weatherContainer.classList.add("hide");
     errorMessage.classList.add("hide");
+    document.querySelector("#map").classList.add("hide"); 
 
     clearTimeout(debounceTimer);
 
